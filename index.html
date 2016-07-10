@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="hungaroApp">
+<head>
+	<base href="/">
+    <!--Import custom style.css -->
+    <link type="text/css" rel="stylesheet" href="../../css/style.css"/>
+    <!-- Import google icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <!-- Import jQuery -->
+    <script type="text/javascript" src="../../js/jquery-2.2.4.js"></script>
+    <!-- Angular Material css -->
+    <link rel="stylesheet" href="../../css/angular/angular-material.min.css">
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="../../js/angular/angular.min.js"></script>
+    <script src="../../js/angular/angular-animate.min.js"></script>
+    <script src="../../js/angular/angular-aria.min.js"></script>
+    <script src="../../js/angular/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="../../js/angular/angular-material.min.js"></script>
+    <script src="../../js/angular/angular-ui-router.min.js"></script>
+    <!-- App module and controllers -->
+    <script type="text/javascript" src="../../js/angular/myApp.module.js"></script>
+    <script type="text/javascript" src="../../js/angular/home/controllers/HomeController.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8">
+</head>
+<body>
+	<md-sidenav md-component-id="left" class="md-sidenav-left">
+		Let Nav!
+	</md-sidenav>
+    <md-toolbar ng-controller="HomeController">
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" aria-label="Settings">
+				<md-icon aria-label="menu" class="material-icons" ng-click="openLeftMenu()">menu</md-icon>
+			</md-button>
+			<h2>
+				<span>{{title}}</span>
+			</h2>
+			<span flex></span>
+			<md-menu>
+				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="More">
+					<md-icon class="material-icons">more_vert</md-icon>
+				</md-button>
+				<md-menu-content>
+					<md-menu-item>
+						<md-button ng-click="doSomething()">
+							<md-icon class="material-icons">add</md-icon>
+							Do Something
+						</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+		</div>
+    </md-toolbar>
+	<div ui-view autoscroll="false"></div>
+</body>
+</html>

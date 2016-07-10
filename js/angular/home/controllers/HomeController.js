@@ -1,30 +1,12 @@
-var app = angular.module('hungaroApp', ['ngMaterial']);
-app.controller('TitleController', function($scope) {
-  $scope.title = 'My App Title';
-});
-app.controller('AppCtrl', function($scope) {
-  var imagePath = 'img/list/60.jpeg';
-  $scope.todos = [];
-  for (var i = 0; i < 15; i++) {
-    $scope.todos.push({
-      face: imagePath,
-      what: "Brunch this weekend?",
-      who: "Min Li Chan",
-      notes: "I'll be in your neighborhood doing errands."
-    });
-  }
-});
-
 angular
     .module('hungaroApp')
     .controller('HomeController', home);
 
-home.$inject = ['$scope', '$rootScope'];
+home.$inject = ['$scope', '$rootScope', '$mdSidenav'];
 
-function home($scope, $rootScope, $http) {
+function home($scope, $rootScope, $mdSidenav) {
     'use strict';
-    
-    $scope.title = "Método Húngaro"
+    $scope.title = "Método Húngaro";
     var imagePath = '../../../../images/60.png';
     $scope.todos = [];
     for (var i = 0; i < 15; i++) {
@@ -35,4 +17,8 @@ function home($scope, $rootScope, $http) {
             notes: "I'll be in your neighborhood doing errands."
         });
     }
+    
+  $scope.openLeftMenu = function() {
+    $mdSidenav('left').toggle();
+  };
 }

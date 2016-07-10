@@ -6,11 +6,16 @@ hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) 
   $stateProvider
     .state('home', {
         url: '/',
-        templateUrl: 'https://foc-web-project-kperdomo.c9users.io/views/home.html',
-        controller: 'LoginController'
+        templateUrl: 'https://hungaro-project-kperdomo.c9users.io/templates/home.html',
+        controller: 'HomeController'
     });
     // Application theme
     $mdThemingProvider.theme('default')
         .primaryPalette('teal')
         .accentPalette('deep-orange');
 });
+
+hungaro.config(["$locationProvider", function($locationProvider) {
+  // This will remove the pound (#) from routes for html supporting browsers
+  $locationProvider.html5Mode(true);
+}]);
