@@ -18,6 +18,9 @@
     <!-- Angular Material Library -->
     <script src="../../js/angular/angular-material.min.js"></script>
     <script src="../../js/angular/angular-ui-router.min.js"></script>
+    <!-- Angular Material data table -->
+	<link href="../../bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="../../bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
     <!-- App module and controllers -->
     <script type="text/javascript" src="../../js/angular/myApp.module.js"></script>
     <script type="text/javascript" src="../../js/angular/home/controllers/HomeController.js"></script>
@@ -26,31 +29,11 @@
     <meta charset="utf-8">
 </head>
 <body>
-	<md-sidenav md-component-id="left" class="md-sidenav-left">
-		Let Nav!
-	</md-sidenav>
     <md-toolbar ng-controller="HomeController">
 		<div class="md-toolbar-tools">
-			<md-button class="md-icon-button" aria-label="Settings">
-				<md-icon aria-label="menu" class="material-icons" ng-click="openLeftMenu()">menu</md-icon>
-			</md-button>
 			<h2>
 				<span>{{title}}</span>
 			</h2>
-			<span flex></span>
-			<md-menu>
-				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="More">
-					<md-icon class="material-icons">more_vert</md-icon>
-				</md-button>
-				<md-menu-content>
-					<md-menu-item>
-						<md-button ng-click="doSomething()">
-							<md-icon class="material-icons">add</md-icon>
-							Do Something
-						</md-button>
-					</md-menu-item>
-				</md-menu-content>
-			</md-menu>
 		</div>
     </md-toolbar>
 	<div ui-view autoscroll="false"></div>

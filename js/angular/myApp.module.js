@@ -1,4 +1,4 @@
-var hungaro = angular.module("hungaroApp", ["ui.router", "ngMaterial"]);
+var hungaro = angular.module("hungaroApp", ["ui.router", "ngMaterial", 'md.data.table']);
 
 
 hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
@@ -12,7 +12,7 @@ hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) 
     // Application theme
     $mdThemingProvider.theme('default')
         .primaryPalette('teal')
-        .accentPalette('deep-orange');
+        .accentPalette('blue')
 });
 
 hungaro.config(["$locationProvider", function($locationProvider) {
