@@ -55,7 +55,7 @@
             <table md-table md-row-select multiple="true" ng-model="selected">
               <thead md-head>
                 <tr md-row>
-                  <th md-column ng-repeat="something in newValues track by $index"><span>Task {{$index+1}}</span></th>
+                  <th md-column md-numeric ng-repeat="something in newValues track by $index"><span>Task {{$index+1}}</span></th>
                 </tr>
               </thead>
               <tbody md-body>

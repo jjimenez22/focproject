@@ -196,8 +196,8 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             console.log("Dimension is: " + dimension);
             // iterate and do the same for every other number
             for (var i = index; i <= data.length; i++) {
-              if (!isNaN(parseInt(data[i], 10))) {
-                var number = parseInt(data[i], 10);
+              var number = parseInt(data[i], 10);
+              if (!isNaN(number)) {
                 index = i+1;
                 while (!isNaN(parseInt(data[index], 10))) {
                   number = number * 10 + parseInt(data[index], 10);
@@ -243,7 +243,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             .parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(false)
             .title('Oops!')
-            .textContent('We couldn\'t parse the data. Please make sure there are no error formats.')
+            .textContent('We couldn\'t parse the data. Please make sure there are no format errors.')
             .ariaLabel('Pargin error')
             .ok('Got it!')
             .targetEvent(ev)
@@ -260,7 +260,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       console.log("new value:" +input.$modelValue);
       console.log("row index: " +rowIndex);
       console.log("cell index: " +cellIndex);
-      if (!isNaN(data)) {
+      if (!isNaN(data) && data >= 1) {
         var copy = $rootScope.rows.slice();
         copy[rowIndex][cellIndex] = data;
         $rootScope.rows = copy;
