@@ -1,4 +1,4 @@
-var hungaro = angular.module("hungaroApp", ["ui.router", "ngMaterial", 'md.data.table']);
+var hungaro = angular.module("hungaroApp", ["ui.router", "ngMaterial", 'md.data.table', 'lfNgMdFileInput']);
 
 
 hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {

@@ -1,0 +1,22 @@
+<md-dialog aria-label="New resources">
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>Please upload your (.txt) file</h2>
+  </div>
+</md-toolbar>
+<md-dialog-content class="md-padding">
+    <div layout="row" layout-align="center center">
+        <form name="testForm" layout="column">
+            <lf-ng-md-file-input name="files00" lf-files='files' lf-required accept="text/plain" preview></lf-ng-md-file-input>
+        </form>
+    </div>
+</md-dialog-content> 
+<md-dialog-actions> 
+    <md-button ng-click="processInput()" ng-disabled="testForm.$invalid" class="md-primary"> 
+        Fill it in! 
+    </md-button>
+    <md-button ng-click="closeDialog()" class="md-primary"> 
+        Cancel 
+    </md-button>
+</md-dialog-actions> 
+</md-dialog>

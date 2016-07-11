@@ -1,0 +1,25 @@
+<md-dialog aria-label="New dimension">
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>Please insert the new dimensions for the table</h2>
+  </div>
+</md-toolbar>
+<md-dialog-content class="md-padding">
+    <div layout="row" layout-align="center center">
+        <div>
+          <md-input-container class="md-block">
+            <label>New dimension</label>
+            <input required type="number" step="any" min="1" max="20" ng-model="newDimension"/>
+          </md-input-container>
+         </div>
+    </div>
+</md-dialog-content> 
+<md-dialog-actions>
+    <md-button ng-click="saveNewDimension(newDimension)" ng-disabled="missingField(newDimension)" class="md-primary"> 
+        Save 
+    </md-button>
+    <md-button ng-click="closeDialog()" class="md-primary"> 
+        Cancel 
+    </md-button>
+</md-dialog-actions> 
+</md-dialog>

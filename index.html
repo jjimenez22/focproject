@@ -21,6 +21,9 @@
     <!-- Angular Material data table -->
 	<link href="../../bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript" src="../../bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <!-- Angular Material file input -->
+	<link href="../../bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="../../bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.js"></script>
     <!-- App module and controllers -->
     <script type="text/javascript" src="../../js/angular/myApp.module.js"></script>
     <script type="text/javascript" src="../../js/angular/home/controllers/HomeController.js"></script>
@@ -34,8 +37,51 @@
 			<h2>
 				<span>{{title}}</span>
 			</h2>
+            <span>flex></span>
+			<md-menu>
+				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="More">
+					<md-icon>chat</md-icon>
+				</md-button>
+				<md-menu-content>
+				    <md-menu-item>
+				        <p>Contact the authors</p>
+				    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+					<md-menu-item>
+						<md-button ng-click="sendEmail('kperdomo.ch@gmail.com', 'Hello')">
+							<md-icon>account_circle</md-icon>
+							Kristopher Perdomo
+						</md-button>
+					</md-menu-item>
+					<md-menu-item>
+    	              <md-button ng-click="sendEmail('donchubi94@gmail.com', 'Hello')">
+                        <md-icon>account_circle</md-icon>
+                        Jesús Jiménez
+                        </md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
 		</div>
     </md-toolbar>
+ <md-toolbar class="md-menu-toolbar">
+    <div layout="row">
+      <md-toolbar-filler layout layout-align="center center">
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">About this application</h2>
+        <div layout layout-align="center center" class="md-padding">
+          <div layout="row" layout-align="center center">
+            <p class="sub-header md-padding">The following is an application that demostrates how the hungarian algorithm works.
+            This algorithm is based on the Simplex algorithm and allows to solve assignation problems. 
+            More information can be found <a href="https://en.wikipedia.org/wiki/Hungarian_algorithm" target="_blank">here</a></p> 
+          </div>
+        </div>
+      </div>
+      <md-toolbar-filler layout layout-align="center right">
+      </md-toolbar-filler>
+    </div>
+  </md-toolbar>
+    
 	<div ui-view autoscroll="false"></div>
 </body>
 </html>

@@ -1,0 +1,25 @@
+<md-dialog aria-label="New resources">
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2>Please fill all new column values</h2>
+  </div>
+</md-toolbar>
+<md-dialog-content class="md-padding">
+    <div layout="row">
+        <div flex ng-repeat="i in newValues track by $index">
+          <md-input-container class="md-block">
+            <label>{{$index+1}}</label>
+            <input required type="number" step="any" min="1" ng-model="newValues[$index]"/>
+          </md-input-container>
+         </div>
+    </div>
+</md-dialog-content> 
+<md-dialog-actions> 
+    <md-button ng-click="saveRow()" ng-disabled="missingField()" class="md-primary"> 
+        Save 
+    </md-button>
+    <md-button ng-click="closeDialog()" class="md-primary"> 
+        Cancel 
+    </md-button>
+</md-dialog-actions> 
+</md-dialog>
