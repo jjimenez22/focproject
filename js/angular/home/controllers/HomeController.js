@@ -32,7 +32,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
            locals: {
              newValues: $scope.newValues
            },
-          templateUrl: '../../../templates/dialogs/newRow.html',
+          templateUrl: 'templates/dialogs/newRow.html',
           clickOutsideToClose: true,
           controller: DialogController
     });
@@ -68,7 +68,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
            locals: {
              newDimension: 0
            },
-          templateUrl: '../../../templates/dialogs/newDimension.html',
+          templateUrl: 'templates/dialogs/newDimension.html',
           clickOutsideToClose: true,
           controller: DialogController
     });
@@ -153,7 +153,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
            locals: {
              file: null
            },
-          templateUrl: '../../../templates/dialogs/loadData.html',
+          templateUrl: 'templates/dialogs/loadData.html',
           clickOutsideToClose: true,
           controller: DialogController
     });

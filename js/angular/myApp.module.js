@@ -6,7 +6,7 @@ hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) 
   $stateProvider
     .state('home', {
         url: '/',
-        templateUrl: 'https://hungaro-project-kperdomo.c9users.io/templates/home.html',
+        templateUrl: 'templates/home.html',
         controller: 'HomeController'
     });
     // Application theme
