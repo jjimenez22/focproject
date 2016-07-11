@@ -4,7 +4,7 @@
     <br/>
 <md-content class="md-padding hungaro-card">
   <div >
-    <p>Start filling the table to get hungarian started</p> 
+    <p>The table is filled with sample data. Configure and/or re-fill the table to get hungarian started</p> 
   </div>
 </md-content>
       <md-card class="hungaro-card">
@@ -59,17 +59,18 @@
                 </tr>
               </thead>
               <tbody md-body>
-                <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows track by $index | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+                <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
                   <td md-cell ng-click="editCell($event, data, rows.indexOf(row), $index)" ng-repeat="data in row track by $index">{{data}}</td>
                 </tr>
               </tbody>
             </table>
           </md-table-container>
+          <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
       </md-card>
   </md-content>
   <br/>
   <div layout="row" layout-align="center center">
       <div>
-        <md-button class="md-accent md-raised" ng-disabled="(rows.length < dimension)">Go Hungarian!</md-button>
+        <md-button class="md-accent md-raised" ng-click="runHungarian()" ng-disabled="(rows.length < dimension)">Go Hungarian!</md-button>
       </div>
   </div>

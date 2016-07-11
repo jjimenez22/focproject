@@ -6,13 +6,11 @@ home.$inject = ['$scope', '$rootScope', '$mdDialog', '$http', '$mdEditDialog'];
 
 function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   'use strict';
-  $scope.title = "Hungarian algorithm";
-  
   $scope.selected = [];
   $rootScope.dimension = 3;
   $scope.newValues = new Array($rootScope.dimension);
   console.log("newValuesLength: " + $scope.newValues.length);
-  $rootScope.rows = [["11","12","13"],["21","22","23"]];
+  $rootScope.rows = [["11","12","13"],["21","22","23"], ["31","32","33"]];
   
   $scope.query = {
     limit: 5,
@@ -283,4 +281,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   
       window.open(link, '_blank');
    };
+   
+  // HUNGARIAN ALGORITHM
+  $scope.runHungarian = function() {
+    
+  }
 }
