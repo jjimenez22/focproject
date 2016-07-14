@@ -7,13 +7,14 @@ home.$inject = ['$scope', '$rootScope', '$mdDialog', '$http', '$mdEditDialog'];
 function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   'use strict';
   $scope.selected = [];
-  $rootScope.dimension = 3;
-  $scope.newValues = new Array($rootScope.dimension);
-  console.log($rootScope.rows);
+
+
   if (typeof $rootScope.rows === "undefined") {
     // initialize only at beginning of app
+    $rootScope.dimension = 3;
     $rootScope.rows = [["12","54","9"],["32","87","41"], ["6","3","7"]];
   }
+  $scope.newValues = new Array($rootScope.dimension);
 
   $rootScope.query = {
     limit: 10,
