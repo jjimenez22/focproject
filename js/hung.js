@@ -81,7 +81,7 @@ function Hung(tabla) {
             tabla[i][j] -= min;
          }
       }
-      iteracion.result = tabla.slice();
+      iteracion.result = angular.copy(tabla);
       solucion.push(iteracion);
       
       iteracion = new Sol();
@@ -93,7 +93,7 @@ function Hung(tabla) {
             tabla[i][j] -= min;
          }
       }
-      iteracion.result = tabla.slice();
+      iteracion.result = angular.copy(tabla);
       solucion.push(iteracion);
    };
 
@@ -183,7 +183,7 @@ function Hung(tabla) {
    while (!esSol()) {
       iteracion = new Sol();
       restarNoTachados(menorNoTachado());
-      iteracion.result = tabla.slice();
+      iteracion.result = angular.copy(tabla);
       solucion.push(iteracion);
    }
    solucion[solucion.length-1].esSol=true;
@@ -197,6 +197,11 @@ function Hung(tabla) {
  */
 function resolver(tabla) {
    var sol=[];
+   
+   var returnType = function(indexi, indexj) {
+         this.i=indexi;
+         this.j=indexj;
+      };
    
    var estai = function(ind) {
       var fnd=false;
@@ -217,28 +222,27 @@ function resolver(tabla) {
    var ceroUnico = function() {
       var i0;
       var j0;
-      var fnd=false;
+      var minj0;
       var counter;
+      var mincont=2000000;
       
-      for (var i=0;i<tabla.length && !fnd;i++) {
+      for (var i=0;i<tabla.length;i++) {
          if (estai(i))
             continue;
          counter=0;
-         for (var j=0;j<tabla.length&&counter<2;j++) {
+         for (var j=0;j<tabla.length;j++) {
             if (tabla[i][j]===0 && !estaj(j)) {
                counter++;
                j0=j;
             }
          }
-         fnd = (counter===1);
-         if (fnd)
+         if (counter<mincont) {
             i0=i;
+            minj0=j0;
+            mincont=counter;
+         }
       }
-      var ret = function() {
-         this.i=i0;
-         this.j=j0;
-      };
-      return new ret();
+      return new returnType(i0, minj0);
    };
    
    for ( var i=0;i<tabla.length;i++) {
