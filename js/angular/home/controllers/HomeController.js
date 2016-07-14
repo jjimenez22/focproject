@@ -9,8 +9,11 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   $scope.selected = [];
   $rootScope.dimension = 3;
   $scope.newValues = new Array($rootScope.dimension);
-  console.log("newValuesLength: " + $scope.newValues.length);
-  $rootScope.rows = [["11","12","13"],["21","22","23"], ["31","32","33"]];
+  console.log($rootScope.rows);
+  if (typeof $rootScope.rows === "undefined") {
+    // initialize only at beginning of app
+    $rootScope.rows = [["12","54","9"],["32","87","41"], ["6","3","7"]];
+  }
 
   $rootScope.query = {
     limit: 10,
