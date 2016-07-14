@@ -59,19 +59,16 @@ function Hung(tabla) {
 
    var columnMin = function(j) {
       var min=tabla[0][j];
-      var minindex=0;
-      // iteracion.minvec.push(0);
+      iteracion.minvec.push(0);
 
       for (var i=1;i<tabla.length;i++) {
          if (min===0)
             return 0;
          if (tabla[i][j]<min) {
             min = tabla[i][j];
-            minindex=i;
-            // iteracion.minvec[iteracion.minvec.length-1]=i;
+            iteracion.minvec[iteracion.minvec.length-1]=i;
          }
       }
-      iteracion.minvec[i]=j;
       return min;
    };
 
