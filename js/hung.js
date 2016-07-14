@@ -1,16 +1,38 @@
 function Hung(tabla) {
+   
+   var Sol = function() {
+      this.result = [];
+      this.minvec = [];
+      this.strikethrough = [];
+      this.mini = -1;
+      this.minj = -1;
+      this.esSol = false;
+      var auxArray = [];
+      for (var i=0;i<tabla.length;i++) {
+         for (var j=0;j<tabla.length;j++) {
+            auxArray.push(false);
+         }
+         this.strikethrough.push(auxArray);
+         auxArray = [];
+      }
+   };
+   
+   var solucion = [];
+   var iteracion = {};
 
    var Max0 = function(filaOColumna=0, posicion=-1) {
       this.fc=filaOColumna;
       this.pos=posicion;
       this.cst=0;
-      this.ct=0;
+      // this.ct=0;
       this.esMejor = function(val) {
          if (val.cst>this.cst)
             return true;
          if (val.cst<this.cst)
             return false;
-         return (val.ct>this.ct);
+         if (val.fc===1)
+            return (ftach.length<ctach.length);
+         return (ftach.length>ctach.length);
       };
    };
 
@@ -25,37 +47,54 @@ function Hung(tabla) {
 
    var minimo = function(fila) {
       var min = fila[0];
+      iteracion.minvec.push(0);
       for (var i=1;i<fila.length;i++) {
-         if (fila[i]<min)
+         if (fila[i]<min) {
             min=fila[i];
+            iteracion.minvec[iteracion.minvec.length-1]=i;
+         }
       }
       return min;
    };
 
    var columnMin = function(j) {
       var min=tabla[0][j];
+      iteracion.minvec.push(0);
 
       for (var i=1;i<tabla.length;i++) {
-         if (tabla[i][j]<min)
+         if (min===0)
+            return 0;
+         if (tabla[i][j]<min) {
             min = tabla[i][j];
+            iteracion.minvec[iteracion.minvec.length-1]=i;
+         }
       }
       return min;
    };
 
    var costosReducidos = function() {
       var min;
+      iteracion = new Sol();
       for (var i=0;i<tabla.length;i++) {
          min=minimo(tabla[i]);
          for (var j=0;j<tabla[i].length;j++) {
             tabla[i][j] -= min;
          }
       }
+      iteracion.result = tabla.slice();
+      solucion.push(iteracion);
+      
+      iteracion = new Sol();
       for (var j=0;j<tabla.length;j++) {
          min=columnMin(j);
+         if (min===0)
+            continue;
          for (var i=0;i<tabla.length;i++) {
             tabla[i][j] -= min;
          }
       }
+      iteracion.result = tabla.slice();
+      solucion.push(iteracion);
    };
 
    var valMax0 = function(mode) {
@@ -64,12 +103,10 @@ function Hung(tabla) {
       for (var i=0;i<tabla.length;i++) {
          if (estaTachado((mode?ftach:ctach), i))
             continue;
-         val = new Max0(1, i);
+         val = new Max0((mode?1:2), i);
          for (var j=0;j<tabla.length;j++) {
             if (tabla[mode?i:j][mode?j:i]===0)
-               if (estaTachado((mode?ctach:ftach), i)) {
-                  val.ct++;
-               } else {
+               if (!estaTachado((mode?ctach:ftach), j)) {
                   val.cst++;
                }
          }
@@ -88,7 +125,7 @@ function Hung(tabla) {
                return true;
       }
       return false;
-   }
+   };
 
    var tachar = function() {
       ftach=[];
@@ -112,16 +149,19 @@ function Hung(tabla) {
    };
 
    var menorNoTachado = function() {
-      elem = 20000000;
+      var elem = 20000000;
       for (var i=0;i<tabla.length;i++) {
          if (estaTachado(ftach, i))
             continue;
          for (var j=0;j<tabla.length;j++)
-            if (!estaTachado(ctach, j) && tabla[i][j]<elem)
+            if (!estaTachado(ctach, j) && tabla[i][j]<elem) {
                elem = tabla[i][j];
+               iteracion.mini=i;
+               iteracion.minj=j;
+            }
       }
       return elem;
-   }
+   };
 
    var restarNoTachados = function(elem) {
       var ti=false;
@@ -130,16 +170,92 @@ function Hung(tabla) {
          ti = estaTachado(ftach, i);
          for (var j=0;j<tabla.length;j++) {
             tj = estaTachado(ctach, j);
+            iteracion.strikethrough[i][j] = (ti || tj);
             if (ti&&tj) {
                tabla[i][j] += elem;
             } else if (!ti && !tj)
                tabla[i][j] -= elem;
          }
       }
-   }
-
+   };
+   console.log("Holaaaaa");
    costosReducidos();
    while (!esSol()) {
+      iteracion = new Sol();
       restarNoTachados(menorNoTachado());
+      iteracion.result = tabla.slice();
+      solucion.push(iteracion);
    }
+   solucion[solucion.length-1].esSol=true;
+   return solucion;
+}
+
+/**
+ * Determines the resulting elements used in function Z.
+ * @param tabla - Final table
+ * @return Indexes of the original table's cells that are used to calculate Z function.
+ */
+function resolver(tabla) {
+   var sol=[];
+   
+   var estai = function(ind) {
+      var fnd=false;
+      for (var i=0;i<sol.length && !fnd;i++) {
+         fnd=(sol[i].i===ind);
+      }
+      return fnd;
+   };
+   
+   var estaj = function(ind) {
+      var fnd=false;
+      for (var i=0;i<sol.length && !fnd;i++) {
+         fnd=(sol[i].j===ind);
+      }
+      return fnd;
+   };
+   
+   var ceroUnico = function() {
+      var i0;
+      var j0;
+      var fnd=false;
+      var counter;
+      
+      for (var i=0;i<tabla.length && !fnd;i++) {
+         if (estai(i))
+            continue;
+         counter=0;
+         for (var j=0;j<tabla.length&&counter<2;j++) {
+            if (tabla[i][j]===0 && !estaj(j)) {
+               counter++;
+               j0=j;
+            }
+         }
+         fnd = (counter===1);
+         if (fnd)
+            i0=i;
+      }
+      var ret = function() {
+         this.i=i0;
+         this.j=j0;
+      };
+      return new ret();
+   };
+   
+   for ( var i=0;i<tabla.length;i++) {
+      sol.push(ceroUnico());
+   }
+   return sol;
+}
+
+/**
+ * Solves the Z function
+ * @param sol - Indexes of the original table's cells that are used to calculate Z function.
+ * @param tabla - Original table.
+ * @return Result of solving Z.
+ */
+function resultado(sol, tabla) {
+   var acc=0;
+   for (var i=0;i<sol.length;i++)
+      acc += tabla[sol[i].i][sol[i].j];
+   return acc;
 }

@@ -1,13 +1,17 @@
 var hungaro = angular.module("hungaroApp", ["ui.router", "ngMaterial", 'md.data.table', 'lfNgMdFileInput']);
 
-
 hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('home', {
-        url: '/',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeController'
+      url: '/',
+      templateUrl: 'templates/home.html',
+      controller: 'HomeController'
+    })
+    .state('go', {
+      url: '/go-hung',
+      templateUrl: 'templates/go-hungarian.html',
+      controller: 'HungarianController'
     });
     // Application theme
     $mdThemingProvider.theme('default')
@@ -15,7 +19,20 @@ hungaro.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider) 
         .accentPalette('blue')
 });
 
+/*
 hungaro.config(["$locationProvider", function($locationProvider) {
-  // This will remove the pound (#) from routes for html supporting browsers
+  // This will remove the pound (#) from routes for html5 supporting browsers
   $locationProvider.html5Mode(true);
 }]);
+*/
+hungaro.run(['$rootScope', '$location','$state', function ($rootScope, $location, $state) {
+        $rootScope.$on("$locationChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        
+        if ($location.url() == "/go-hung") {
+          if ($rootScope.rows.length < $rootScope.dimension) {
+            e.preventDefault();
+            $state.go('home');
+          }
+        }
+  });
+}])

@@ -280,10 +280,5 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
                  + "&subject=" + escape(subject);
   
       window.open(link, '_blank');
-   };
-   
-  // HUNGARIAN ALGORITHM
-  $scope.runHungarian = function() {
-    
-  }
+  };
 }

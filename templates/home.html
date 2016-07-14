@@ -1,76 +1,76 @@
 <title>Hungarian</title>
 
 <md-content ng-cloack>
-    <br/>
-<md-content class="md-padding hungaro-card">
-  <div >
-    <p>The table is filled with sample data. Configure and/or re-fill the table to get hungarian started</p> 
-  </div>
-</md-content>
-      <md-card class="hungaro-card">
-          <!-- Default toolbar -->
-          <md-toolbar class="md-table-toolbar md-default" ng-show="(selected.length == 0)">
-            <div class="md-toolbar-tools">
-              <span>Iteration table</span>
-              <span flex></span>
-        			<md-menu>
-        				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="More">
-        					<md-icon>more_vert</md-icon>
-        				</md-button>
-        				<md-menu-content>
-        					<md-menu-item>
-        						<md-button ng-click="setDimensions()">
-        							<md-icon>settings</md-icon>
-        							Set size
-        						</md-button>
-        					</md-menu-item>
-        					<md-menu-item>
-			              <md-button ng-disabled="(rows.length == dimension)" ng-click="addRow()">
-                      <md-icon>add</md-icon>
-                      Add row
-                    </md-button>
-        					</md-menu-item>
-        					<md-menu-item>
-			              <md-button ng-click="loadData()">
-                      <md-icon>file_upload</md-icon>
-                      Load data
-                    </md-button>
-        					</md-menu-item>
-        				</md-menu-content>
-        			</md-menu>
-            </div>
-          </md-toolbar>
-          <!-- Selected row toolbar -->
-          <md-toolbar class="md-table-toolbar md-accent" ng-show="(selected.length > 0)">
-            <div class="md-toolbar-tools">
-              <span>{{selected.length}} {{selected.length > 1 ? 'rows' : 'row'}} selected</span>
-              <span flex></span>
-              <md-button class="md-icon-button" ng-click="deleteRow()">
-                <md-icon ng-style="{color: '#ffffff'}">delete</md-icon>
-              </md-button>
-            </div>
-          </md-toolbar>
-          <!-- Table content -->
-          <md-table-container>
-            <table md-table md-row-select multiple="true" ng-model="selected">
-              <thead md-head>
-                <tr md-row>
-                  <th md-column md-numeric ng-repeat="something in newValues track by $index"><span>Task {{$index+1}}</span></th>
-                </tr>
-              </thead>
-              <tbody md-body>
-                <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
-                  <td md-cell ng-click="editCell($event, data, rows.indexOf(row), $index)" ng-repeat="data in row track by $index">{{data}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </md-table-container>
-          <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
-      </md-card>
-  </md-content>
   <br/>
-  <div layout="row" layout-align="center center">
-      <div>
-        <md-button class="md-accent md-raised" ng-click="runHungarian()" ng-disabled="(rows.length < dimension)">Go Hungarian!</md-button>
-      </div>
-  </div>
+  <md-content class="md-padding hungaro-card">
+    <div >
+      <p>The table is filled with sample data. Configure and/or re-fill the table to get hungarian started</p> 
+    </div>
+  </md-content>
+  <md-card class="hungaro-card">
+      <!-- Default toolbar -->
+      <md-toolbar class="md-table-toolbar md-default" ng-show="(selected.length == 0)">
+        <div class="md-toolbar-tools">
+          <span>Iteration table</span>
+          <span flex></span>
+    			<md-menu>
+    				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="More">
+    					<md-icon>more_vert</md-icon>
+    				</md-button>
+    				<md-menu-content>
+    					<md-menu-item>
+    						<md-button ng-click="setDimensions()">
+    							<md-icon>settings</md-icon>
+    							Set size
+    						</md-button>
+    					</md-menu-item>
+    					<md-menu-item>
+	              <md-button ng-disabled="(rows.length == dimension)" ng-click="addRow()">
+                  <md-icon>add</md-icon>
+                  Add row
+                </md-button>
+    					</md-menu-item>
+    					<md-menu-item>
+	              <md-button ng-click="loadData()">
+                  <md-icon>file_upload</md-icon>
+                  Load data
+                </md-button>
+    					</md-menu-item>
+    				</md-menu-content>
+    			</md-menu>
+        </div>
+      </md-toolbar>
+      <!-- Selected row toolbar -->
+      <md-toolbar class="md-table-toolbar md-accent" ng-show="(selected.length > 0)">
+        <div class="md-toolbar-tools">
+          <span>{{selected.length}} {{selected.length > 1 ? 'rows' : 'row'}} selected</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="deleteRow()">
+            <md-icon ng-style="{color: '#ffffff'}">delete</md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <!-- Table content -->
+      <md-table-container>
+        <table md-table md-row-select multiple="true" ng-model="selected">
+          <thead md-head>
+            <tr md-row>
+              <th md-column md-numeric ng-repeat="something in newValues track by $index"><span>Task {{$index+1}}</span></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+              <td md-cell ng-click="editCell($event, data, rows.indexOf(row), $index)" ng-repeat="data in row track by $index">{{data}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
+  </md-card>
+</md-content>
+<br/>
+<div layout="row" layout-align="center center">
+    <div>
+      <md-button class="md-accent md-raised" ui-sref="go" ng-disabled="(rows.length < dimension)">Go Hungarian!</md-button>
+    </div>
+</div>
