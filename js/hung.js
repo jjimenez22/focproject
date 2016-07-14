@@ -47,7 +47,7 @@ function Hung(tabla) {
 
    var minimo = function(fila) {
       var min = fila[0];
-      iteracion.minvec.push(0);
+      iteracion.minvec.push(min);
       for (var i=1;i<fila.length;i++) {
          if (fila[i]<min) {
             min=fila[i];
@@ -59,7 +59,7 @@ function Hung(tabla) {
 
    var columnMin = function(j) {
       var min=tabla[0][j];
-      iteracion.minvec.push(0);
+      iteracion.minvec.push(min);
 
       for (var i=1;i<tabla.length;i++) {
          if (min===0)
