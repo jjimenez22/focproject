@@ -35,7 +35,7 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <md-toolbar ng-controller="HomeController">
+    <md-toolbar  id="top" ng-controller="HomeController">
 		<div class="md-toolbar-tools">
 			<h2>
 				<span>Hungarian Algorithm</span>
@@ -74,8 +74,8 @@
         <div layout layout-align="center center" class="md-padding">
           <div layout="row" layout-align="center center">
             <p class="sub-header md-padding">The following is an application that demostrates how the hungarian algorithm works.
-            This algorithm is based on the Simplex algorithm and allows to solve assignation problems. 
-            More information can be found <a href="https://en.wikipedia.org/wiki/Hungarian_algorithm" target="_blank">here</a></p> 
+            This algorithm is based on the Simplex algorithm and allows to solve assignation problems.
+            More information can be found <a href="https://en.wikipedia.org/wiki/Hungarian_algorithm" target="_blank">here</a></p>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
       </md-toolbar-filler>
     </div>
   </md-toolbar>
-    
+
 	<div ui-view autoscroll="false"></div>
 </body>
 </html>

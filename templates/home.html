@@ -59,7 +59,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+            <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
               <td md-cell ng-click="editCell($event, data, rows.indexOf(row), $index)" ng-repeat="data in row track by $index">{{data}}</td>
             </tr>
           </tbody>

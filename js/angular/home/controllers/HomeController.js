@@ -13,7 +13,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   $rootScope.rows = [["11","12","13"],["21","22","23"], ["31","32","33"]];
 
   $rootScope.query = {
-    limit: 5,
+    limit: 10,
     page: 1
   };
 

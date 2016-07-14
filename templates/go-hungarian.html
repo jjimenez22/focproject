@@ -1,12 +1,16 @@
 <title>Hungarian</title>
 
 <md-content>
-    <br/>
-    <md-content class="md-padding hungaro-card">
-      <div>
-        <p>Hungarian result has been calculated! Algorithm iterations are shown below!</p>
+  <br/>
+  <md-content class="md-padding hungaro-card">
+    <div>
+      <p>Hungarian result has been calculated! Algorithm iterations are shown below</p>
+      <div layout layout-align="left center">
+        <md-button class="md-accent md-raised" ui-sref="home">Go back</md-button>
+        <md-button class="md-accent md-raised" ng-click="gotoElement('result')">To result</md-button>
       </div>
-    </md-content>
+    </div>
+  </md-content>
 
   <!-- first iteration - rows minimum values -->
   <md-card class="hungaro-card">
@@ -20,7 +24,7 @@
       <md-table-container>
         <table md-table>
           <tbody md-body>
-            <tr md-row ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+            <tr md-row ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
               <td md-cell ng-repeat="data in row track by $index"><span  ng-style='isMin(0, rows.indexOf(row), $index)'>{{data}}</span></td>
             </tr>
           </tbody>
@@ -48,7 +52,7 @@
       <md-table-container>
         <table md-table>
           <tbody md-body>
-            <tr md-row ng-repeat="row in hungarian[0].result | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+            <tr md-row ng-repeat="row in hungarian[0].result | limitTo: query.limit: (query.page - 1) * query.limit" >
               <td md-cell ng-repeat="data in row track by $index"><span>{{data}}</span></td>
             </tr>
           </tbody>
@@ -76,8 +80,8 @@
       <md-table-container>
         <table md-table>
           <tbody md-body>
-            <tr md-row ng-repeat="row in hungarian[0].result | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
-              <td md-cell ng-repeat="data in row track by $index"><span  ng-style='isMin(1, hungarian[0].result.indexOf(row), $index)'>{{data}}</span></td>
+            <tr md-row ng-repeat="row in hungarian[0].result | limitTo: query.limit: (query.page - 1) * query.limit" >
+              <td md-cell ng-repeat="data in row track by $index"><span  ng-style='isMin(1, $index, hungarian[0].result.indexOf(row))'>{{data}}</span></td>
             </tr>
           </tbody>
         </table>
@@ -104,7 +108,7 @@
       <md-table-container>
         <table md-table>
           <tbody md-body>
-            <tr md-row ng-repeat="row in hungarian[1].result | limitTo: query.limit: (query.page - 1) * query.limit" md-select-id="{{$index}}">
+            <tr md-row ng-repeat="row in hungarian[1].result | limitTo: query.limit: (query.page - 1) * query.limit" >
               <td md-cell ng-repeat="data in row track by $index"><span>{{data}}</span></td>
             </tr>
           </tbody>
@@ -113,11 +117,157 @@
       <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
   </md-card>
   <br/>
-  <div layout="row" layout-align="center center">
+  <div layout="column" layout-align="center center">
     <div>
       Each column gets it's minimum element subtracted
     </div>
   </div>
   <br/>
   <br/>
+  <!-- possible final table - result -->
+  <md-card id="result" class="hungaro-card" ng-show="(hungarian[1].esSol)">
+      <!-- table title -->
+      <md-toolbar class="md-table-toolbar md-accent">
+        <div class="md-toolbar-tools">
+            <span>Final result - original table</span>
+        </div>
+      </md-toolbar>
+      <!-- Table content -->
+      <md-table-container>
+        <table md-table>
+          <tbody md-body>
+            <tr md-row ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
+              <td md-cell ng-repeat="data in row track by $index" ng-style='isSolution(rows.indexOf(row), $index)'><span>{{data}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
+  </md-card>
+  <br/>
+  <div layout="column" layout-align="center center" ng-show="(hungarian[1].esSol)">
+    <div ng-style="{'color':'green','font-weight':'bold'}" ng-show="(hungarian[1].esSol)">
+      Solution has been found!
+    </div>
+    <div>
+      The elements part of the final solution are shown in <span ng-style="{'color':'green', 'font-weight':'bold'}">green</span>
+    </div>
+    <md-card>
+      <md-card-content>
+        Z = {{formatSolution()}}
+      </md-card-content>
+    </md-card>
+  </div>
+  <br/>
+  <br/>
+  <!-- rest of possible iterations -->
+  <md-content ng-repeat="table in restOfSolution">
+    <md-card class="hungaro-card">
+        <!-- next iteration - striking -->
+        <md-toolbar class="md-table-toolbar md-accent">
+          <div class="md-toolbar-tools">
+              <span>{{$index+3}}{{$index == 0 ? 'rd' : 'th'}} iteration - marking</span>
+          </div>
+        </md-toolbar>
+        <!-- Table content -->
+        <md-table-container>
+          <table md-table>
+            <tbody md-body>
+              <tr md-row ng-repeat="row in table.prevResult | limitTo: query.limit: (query.page - 1) * query.limit" >
+                <td md-cell ng-repeat="data in row track by $index" ng-style='isStrike(table.strikethrough, table.prevResult.indexOf(row), $index)'>
+                  <span ng-show="table.strikethrough[table.prevResult.indexOf(row)][$index]"><strike>{{data}}</strike></span>
+                  <span ng-style="{{isOnlyMin(restOfSolution.indexOf(table)+2, table.prevResult.indexOf(row), $index)}}" ng-hide="table.strikethrough[table.prevResult.indexOf(row)][$index]">{{data}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
+    </md-card>
+    <br/>
+    <div layout="column" layout-align="center center">
+      <div>
+        Rows and columns with most zeros are <span ng-style="{'color':'red','font-weight':'bold'}"><strike>marked</strike></span>
+      </div>
+      <div ng-show="(table.esSol)">
+        <span ng-style="{'color':'green','font-weight':'bold'}">Solution has been found.</span> Amount of marked rows and columns already &ge; {{dimension}}!
+      </div>
+      <div ng-hide="(table.esSol)">
+        Amount of marked rows and columns still &lt; {{dimension}}. <span ng-style="{'color':'red','font-weight':'bold'}">Continuing iterations</span>
+      </div>
+      <div>
+        The minimum value on this table is shown as <span ng-style="{'color':'blue','font-weight':'bold'}">blue</span>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <!-- 3rd iteration - subtraction -->
+    <md-card class="hungaro-card">
+        <!-- table title -->
+        <md-toolbar class="md-table-toolbar md-accent">
+          <div class="md-toolbar-tools">
+              <span>{{$index+3}}{{$index == 0 ? 'rd' : 'th'}} iteration - result after subtraction</span>
+          </div>
+        </md-toolbar>
+        <!-- Table content -->
+        <md-table-container>
+          <table md-table>
+            <tbody md-body>
+              <tr md-row ng-repeat="row in table.result | limitTo: query.limit: (query.page - 1) * query.limit" >
+                <td md-cell ng-repeat="data in row track by $index"><span>{{data}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
+    </md-card>
+    <br/>
+    <div layout="column" layout-align="center center">
+      <div>
+        Each unmarked element gets subtracted by the minimum element found
+      </div>
+      <div>
+        Each intersection marked element gets added by the minimum element found
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <!-- Show final table in case we have a solution already -->
+    <md-card id="result" class="hungaro-card" ng-show="(table.esSol)">
+        <!-- table title -->
+        <md-toolbar class="md-table-toolbar md-accent">
+          <div class="md-toolbar-tools">
+              <span>Final result - original table</span>
+          </div>
+        </md-toolbar>
+        <!-- Table content -->
+        <md-table-container>
+          <table md-table>
+            <tbody md-body>
+              <tr md-row ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
+                <td md-cell ng-repeat="data in row track by $index" ng-style='isSolution(rows.indexOf(row), $index)'><span>{{data}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
+    </md-card>
+    <br/>
+    <div layout="column" layout-align="center center" ng-show="(table.esSol)">
+      <div>
+        The elements part of the final solution are shown in <span ng-style="{'color':'green', 'font-weight':'bold'}">green</span>
+      </div>
+      <md-card>
+        <md-card-content>
+          Z = {{formatSolution()}}
+        </md-card-content>
+      </md-card>
+    </div>
+    <br/>
+  </md-content>
+  <!-- Bottom page -->
+  <div class="hungaro-card" layout layout-align="center center">
+    <md-button class="md-accent md-raised" ui-sref="home">Go back</md-button>
+    <md-button class="md-accent md-raised" ng-click="gotoElement('top')">To top</md-button>
+  </div>
 </md-content>
