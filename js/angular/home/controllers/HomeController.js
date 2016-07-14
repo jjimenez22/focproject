@@ -12,7 +12,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   if (typeof $rootScope.rows === "undefined") {
     // initialize only at beginning of app
     $rootScope.dimension = 3;
-    $rootScope.rows = [["12","54","9"],["32","87","41"], ["6","3","7"]];
+    $rootScope.rows = [[12, 54, 9],[32, 87, 41], [6, 3, 7]];
   }
   $scope.newValues = new Array($rootScope.dimension);
 
