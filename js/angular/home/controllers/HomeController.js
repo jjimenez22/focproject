@@ -8,7 +8,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   'use strict';
   $scope.selected = [];
 
-
   if (typeof $rootScope.rows === "undefined") {
     // initialize only at beginning of app
     $rootScope.dimension = 3;
@@ -21,12 +20,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     page: 1
   };
 
-  // this automatically adds item to selected array
-  $scope.selectItem = function(item) {
-      console.log("selected item: " + item);
-      console.log("selected item index: " + $rootScope.rows.indexOf(item));
-  };
-
+  /**
+  * Uses a custom dialog view to get the new row from user input
+  */
   $scope.addRow = function($event) {
       $scope.newValues = new Array($rootScope.dimension);
        var parentEl = angular.element(document.body);
@@ -40,6 +36,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           clickOutsideToClose: true,
           controller: DialogController
     });
+      // Isolated dialog controller
       function DialogController($scope, $mdDialog, newValues) {
         $scope.newValues = newValues;
 
@@ -64,6 +61,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       }
   };
 
+  /**
+  * Uses a custom dialog view to get the new dimension from user input
+  */
   $scope.setDimensions = function($event) {
        var parentEl = angular.element(document.body);
        $mdDialog.show({
@@ -76,12 +76,14 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           clickOutsideToClose: true,
           controller: DialogController
     });
+      // Isolated dialog controller
       function DialogController($scope, $mdDialog, newDimension) {
 
         $scope.saveNewDimension = function(newDimension) {
           $rootScope.dimension = newDimension;
           // updateTable(newDimension);
           if ($rootScope.rows.length > 0) {
+            // Let user know that the content will be cleared!
             confirmNewDimension($event, newDimension);
           } else {
             updateTable(newDimension);
@@ -116,6 +118,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       }
   };
 
+  /**
+  * Uses a dialog to confirm row(s) deletion. If confirmed, performs deletion
+  */
   $scope.deleteRow = function(ev) {
     // Appending dialog to document.body to cover sidenav in docs app
     var dialogText = ""
@@ -137,7 +142,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     $mdDialog.show(confirm).then(function() {
         // Delete selected row(s)
         console.log("Rows length before removal: " + $rootScope.rows.length);
-        //$rootScope.rows.splice($scope.selectedRow, 1);
         for (var i = 0; i < $scope.selected.length; i++) {
           $rootScope.rows.splice($rootScope.rows.indexOf($scope.selected[i]), 1);
         }
@@ -149,6 +153,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     });
   };
 
+  /**
+  * Uses a custom dialog to load user data from a text file
+  */
   $scope.loadData = function(ev) {
        var parentEl = angular.element(document.body);
        $mdDialog.show({
@@ -161,6 +168,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           clickOutsideToClose: true,
           controller: DialogController
     });
+      // Isolated dialog controller
       function DialogController($scope, $mdDialog) {
         $scope.processInput = function() {
             angular.forEach($scope.files,function(obj) {
@@ -172,13 +180,15 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         $scope.closeDialog = function() {
           $mdDialog.hide();
         };
-
+        // Takes the loaded file and parses it's content
         function parseTextFile(file) {
           $http.get(file).success(function(data) {
             var resultData = parse(data);
             if (resultData.length == $rootScope.dimension * $rootScope.dimension) {
+              // if parsing was successful, fill the table
               fillTable(resultData)
             } else {
+              // parsing unsuccessful -- show alert dialog
               showParsingAlert(ev);
             }
           });
@@ -211,7 +221,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
                 array.push(number);
               }
             }
-            console.log("new array: " + array);
           }
           if (array.length == dimension*dimension) {
             // If parsing was successful, update new table dimension
@@ -255,6 +264,9 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       }
   };
 
+  /**
+  * Uses a custom - small dialog to take new value from user input
+  */
   $scope.editCell = function(event, data, rowIndex, cellIndex) {
   $mdEditDialog.small({
     modelValue: data,
@@ -265,6 +277,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       console.log("row index: " +rowIndex);
       console.log("cell index: " +cellIndex);
       if (!isNaN(data) && data >= 1) {
+        // Input should be a number and grater than zero
         var copy = $rootScope.rows.slice();
         copy[rowIndex][cellIndex] = data;
         $rootScope.rows = copy;
@@ -274,6 +287,10 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   });
 };
 
+  /**
+  * Helper function that updates table header and resets content
+  * based on new dimension
+  */
   function updateTable(dimension) {
     $scope.newValues = new Array(dimension);
     $rootScope.rows = [];

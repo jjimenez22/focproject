@@ -175,8 +175,8 @@
             <tbody md-body>
               <tr md-row ng-repeat="row in table.prevResult | limitTo: query.limit: (query.page - 1) * query.limit" >
                 <td md-cell ng-repeat="data in row track by $index" ng-style='isStrike(table.strikethrough, table.prevResult.indexOf(row), $index)'>
-                  <span ng-show="table.strikethrough[table.prevResult.indexOf(row)][$index]"><strike>{{data}}</strike></span>
-                  <span ng-style="{{isOnlyMin(restOfSolution.indexOf(table)+2, table.prevResult.indexOf(row), $index)}}" ng-hide="table.strikethrough[table.prevResult.indexOf(row)][$index]">{{data}}</span>
+                  <span ng-if="table.strikethrough[table.prevResult.indexOf(row)][$index]"><strike>{{data}}</strike></span>
+                  <span ng-style="{{isOnlyMin(restOfSolution.indexOf(table)+2, table.prevResult.indexOf(row), $index)}}" ng-if="!(table.strikethrough[table.prevResult.indexOf(row)][$index])">{{data}}</span>
                 </td>
               </tr>
             </tbody>
