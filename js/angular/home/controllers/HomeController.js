@@ -11,8 +11,8 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   $scope.newValues = new Array($rootScope.dimension);
   console.log("newValuesLength: " + $scope.newValues.length);
   $rootScope.rows = [["11","12","13"],["21","22","23"], ["31","32","33"]];
-  
-  $scope.query = {
+
+  $rootScope.query = {
     limit: 5,
     page: 1
   };
@@ -22,7 +22,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       console.log("selected item: " + item);
       console.log("selected item index: " + $rootScope.rows.indexOf(item));
   };
-  
+
   $scope.addRow = function($event) {
       $scope.newValues = new Array($rootScope.dimension);
        var parentEl = angular.element(document.body);
@@ -38,17 +38,17 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     });
       function DialogController($scope, $mdDialog, newValues) {
         $scope.newValues = newValues;
-        
+
         $scope.saveRow = function() {
           $rootScope.rows.push($scope.newValues);
           $mdDialog.hide();
         };
-        
+
         $scope.closeDialog = function() {
           console.log($scope.newValues);
           $mdDialog.hide();
         };
-        
+
         $scope.missingField = function() {
           for (var i = 0; i < newValues.length; i++) {
             if (typeof newValues[i] === "undefined") {
@@ -59,7 +59,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         };
       }
   };
-  
+
   $scope.setDimensions = function($event) {
        var parentEl = angular.element(document.body);
        $mdDialog.show({
@@ -73,7 +73,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           controller: DialogController
     });
       function DialogController($scope, $mdDialog, newDimension) {
-        
+
         $scope.saveNewDimension = function(newDimension) {
           $rootScope.dimension = newDimension;
           // updateTable(newDimension);
@@ -85,16 +85,16 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           }
           console.log("new dimension: " + $rootScope.dimension);
         };
-        
+
         $scope.closeDialog = function() {
           $mdDialog.hide();
         };
-        
+
         $scope.missingField = function(newDimension) {
           console.log(newDimension);
           return ((typeof newDimension === "undefined") || newDimension < 2);
         };
-              
+
         function confirmNewDimension(ev, newDimension) {
           // Appending dialog to document.body to cover sidenav in docs app
           var confirm = $mdDialog.confirm()
@@ -111,7 +111,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         }
       }
   };
-  
+
   $scope.deleteRow = function(ev) {
     // Appending dialog to document.body to cover sidenav in docs app
     var dialogText = ""
@@ -144,7 +144,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
       $mdDialog.hide();
     });
   };
-  
+
   $scope.loadData = function(ev) {
        var parentEl = angular.element(document.body);
        $mdDialog.show({
@@ -164,7 +164,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             });
           $mdDialog.hide();
         };
-        
+
         $scope.closeDialog = function() {
           $mdDialog.hide();
         };
@@ -179,7 +179,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             }
           });
         }
-        
+
         // Takes the data response from the .txt file and performs parsing based
         // on indicated inut format.
         function parse(data) {
@@ -250,7 +250,7 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         );
       }
   };
-  
+
   $scope.editCell = function(event, data, rowIndex, cellIndex) {
   $mdEditDialog.small({
     modelValue: data,
@@ -269,16 +269,16 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     targetEvent: event
   });
 };
-  
+
   function updateTable(dimension) {
     $scope.newValues = new Array(dimension);
     $rootScope.rows = [];
   }
-  
+
   $scope.sendEmail = function(email, subject) {
       var link = "mailto:"+ email
                  + "&subject=" + escape(subject);
-  
+
       window.open(link, '_blank');
   };
 }

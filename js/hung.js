@@ -1,5 +1,5 @@
 function Hung(tabla) {
-   
+
    var Sol = function() {
       this.result = [];
       this.minvec = [];
@@ -16,7 +16,7 @@ function Hung(tabla) {
          auxArray = [];
       }
    };
-   
+
    var solucion = [];
    var iteracion = {};
 
@@ -83,7 +83,7 @@ function Hung(tabla) {
       }
       iteracion.result = angular.copy(tabla);
       solucion.push(iteracion);
-      
+
       iteracion = new Sol();
       for (var j=0;j<tabla.length;j++) {
          min=columnMin(j);
@@ -197,12 +197,12 @@ function Hung(tabla) {
  */
 function resolver(tabla) {
    var sol=[];
-   
+
    var returnType = function(indexi, indexj) {
          this.i=indexi;
          this.j=indexj;
       };
-   
+
    var estai = function(ind) {
       var fnd=false;
       for (var i=0;i<sol.length && !fnd;i++) {
@@ -210,7 +210,7 @@ function resolver(tabla) {
       }
       return fnd;
    };
-   
+
    var estaj = function(ind) {
       var fnd=false;
       for (var i=0;i<sol.length && !fnd;i++) {
@@ -218,14 +218,14 @@ function resolver(tabla) {
       }
       return fnd;
    };
-   
+
    var ceroUnico = function() {
       var i0;
       var j0;
       var minj0;
       var counter;
       var mincont=2000000;
-      
+
       for (var i=0;i<tabla.length;i++) {
          if (estai(i))
             continue;
@@ -244,7 +244,7 @@ function resolver(tabla) {
       }
       return new returnType(i0, minj0);
    };
-   
+
    for ( var i=0;i<tabla.length;i++) {
       sol.push(ceroUnico());
    }
