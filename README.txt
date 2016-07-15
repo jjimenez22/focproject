@@ -1,3 +1,7 @@
+AUTORES:
+Perdomo Kristopher CI: 24.553.543
+Jiménez Jesús CI: 23.421.010
+
 INTRUCCIONES DE INSTALACION:
 
 El proyecto está alojado en GitHub, y es posible acceder a éste a través del siguiente enlace:
