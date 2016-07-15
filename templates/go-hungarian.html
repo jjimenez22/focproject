@@ -96,7 +96,7 @@
   </div>
   <br/>
   <br/>
-  <!-- second iteration - resulting table after subtractiong -->
+  <!-- second iteration - resulting table after subtraction -->
   <md-card class="hungaro-card">
       <!-- table title -->
       <md-toolbar class="md-table-toolbar md-accent">
@@ -125,7 +125,7 @@
   <br/>
   <br/>
   <!-- possible final table - result -->
-  <md-card id="result" class="hungaro-card" ng-show="(hungarian[1].esSol)">
+  <md-card id="result" class="hungaro-card" ng-if="(hungarian[1].esSol)">
       <!-- table title -->
       <md-toolbar class="md-table-toolbar md-accent">
         <div class="md-toolbar-tools">
@@ -145,8 +145,8 @@
       <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
   </md-card>
   <br/>
-  <div layout="column" layout-align="center center" ng-show="(hungarian[1].esSol)">
-    <div ng-style="{'color':'green','font-weight':'bold'}" ng-show="(hungarian[1].esSol)">
+  <div layout="column" layout-align="center center" ng-if="(hungarian[1].esSol)">
+    <div ng-style="{'color':'green','font-weight':'bold'}">
       Solution has been found!
     </div>
     <div>
@@ -175,8 +175,8 @@
             <tbody md-body>
               <tr md-row ng-repeat="row in table.prevResult | limitTo: query.limit: (query.page - 1) * query.limit" >
                 <td md-cell ng-repeat="data in row track by $index" ng-style='isStrike(table.strikethrough, table.prevResult.indexOf(row), $index)'>
-                  <span ng-show="table.strikethrough[table.prevResult.indexOf(row)][$index]"><strike>{{data}}</strike></span>
-                  <span ng-style="{{isOnlyMin(restOfSolution.indexOf(table)+2, table.prevResult.indexOf(row), $index)}}" ng-hide="table.strikethrough[table.prevResult.indexOf(row)][$index]">{{data}}</span>
+                  <span ng-if="table.strikethrough[table.prevResult.indexOf(row)][$index]"><strike>{{data}}</strike></span>
+                  <span ng-style="{{isOnlyMin(restOfSolution.indexOf(table)+2, table.prevResult.indexOf(row), $index)}}" ng-if="!(table.strikethrough[table.prevResult.indexOf(row)][$index])">{{data}}</span>
                 </td>
               </tr>
             </tbody>
@@ -189,10 +189,7 @@
       <div>
         Rows and columns with most zeros are <span ng-style="{'color':'red','font-weight':'bold'}"><strike>marked</strike></span>
       </div>
-      <div ng-show="(table.esSol)">
-        <span ng-style="{'color':'green','font-weight':'bold'}">Solution has been found.</span> Amount of marked rows and columns already &ge; {{dimension}}!
-      </div>
-      <div ng-hide="(table.esSol)">
+      <div>
         Amount of marked rows and columns still &lt; {{dimension}}. <span ng-style="{'color':'red','font-weight':'bold'}">Continuing iterations</span>
       </div>
       <div>
@@ -233,7 +230,7 @@
     <br/>
     <br/>
     <!-- Show final table in case we have a solution already -->
-    <md-card id="result" class="hungaro-card" ng-show="(table.esSol)">
+    <md-card id="result" class="hungaro-card" ng-if="(table.esSol && (z > 0))">
         <!-- table title -->
         <md-toolbar class="md-table-toolbar md-accent">
           <div class="md-toolbar-tools">
@@ -253,7 +250,10 @@
         <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15, 20]" md-page="query.page" md-total="{{rows.length}}" md-page-select></md-table-pagination>
     </md-card>
     <br/>
-    <div layout="column" layout-align="center center" ng-show="(table.esSol)">
+    <div layout="column" layout-align="center center" ng-if="(table.esSol && (z > 0))">
+      <div ng-style="{'color':'green','font-weight':'bold'}">
+        Solution has been found!
+      </div>
       <div>
         The elements part of the final solution are shown in <span ng-style="{'color':'green', 'font-weight':'bold'}">green</span>
       </div>
@@ -262,6 +262,11 @@
           Z = {{formatSolution()}}
         </md-card-content>
       </md-card>
+    </div>
+    <div id="result" layout="column" layout-align="center center" ng-if="(table.esSol && (z == 0))">
+      <div ng-style="{'color':'red','font-weight':'bold'}">
+        Sorry, couldn't find a solution for this data
+      </div>
     </div>
     <br/>
   </md-content>

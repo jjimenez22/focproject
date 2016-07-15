@@ -4,7 +4,9 @@
   <br/>
   <md-content class="md-padding hungaro-card">
     <div >
-      <p>The table is filled with sample data. Configure and/or re-fill the table to get hungarian started</p>
+      <p>The table is filled with sample data. You can configure and/or re-fill the table through table options (<md-icon>more_vert</md-icon>)
+        <br/>You can also edit any cell by clicking on it, or delete an entire row or table
+      </p>
     </div>
   </md-content>
   <md-card class="hungaro-card">
@@ -59,7 +61,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="row"  md-on-select="selectItem" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
+            <tr md-row md-select="row" ng-repeat="row in rows | limitTo: query.limit: (query.page - 1) * query.limit" >
               <td md-cell ng-click="editCell($event, data, rows.indexOf(row), $index)" ng-repeat="data in row track by $index">{{data}}</td>
             </tr>
           </tbody>
