@@ -61,7 +61,7 @@ function goHung($scope, $rootScope, $location, $anchorScroll) {
     */
     $scope.isSolution = function(row, col) {
 
-      for (var i = 0; i < $rootScope.dimension; i++) {
+      for (var i = 0; i < zFunction.length; i++) {
         if (zFunction[i].i == row && zFunction[i].j == col) {
           return {'color':'green','font-weight':'bold'};
         }

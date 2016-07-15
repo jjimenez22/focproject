@@ -224,28 +224,34 @@ function resolver(tabla) {
       var minj0;
       var counter;
       var mincont=2000000;
+      var found = false;
 
-      for (var i=0;i<tabla.length;i++) {
+      for (var i=0;i<tabla.length && !found; i++) {
          if (estai(i))
             continue;
          counter=0;
+         // iterate the row looking for a one-zero-row
          for (var j=0;j<tabla.length;j++) {
             if (tabla[i][j]===0 && !estaj(j)) {
                counter++;
                j0=j;
             }
          }
-         if (counter<mincont) {
+         // found a one-zero-row?
+         if (counter == 1) {
             i0=i;
             minj0=j0;
-            mincont=counter;
+            found = true;
+            return new returnType(i0, minj0);
          }
       }
-      return new returnType(i0, minj0);
+      return new returnType(-1, -1)
    };
-
+   var res;
    for ( var i=0;i<tabla.length;i++) {
-      sol.push(ceroUnico());
+     res = ceroUnico();
+     if (res.i != -1 || res.j != -1)
+      sol.push(angular.copy(res));
    }
    return sol;
 }
