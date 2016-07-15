@@ -82,7 +82,10 @@ function Hung(tabla) {
       return min;
    };
 
-   var costosReducidos = function() {
+   /**
+     * Goes through the two firsts iterations
+    **/
+    var costosReducidos = function() {
       var min;
       iteracion = new Sol();
       for (var i=0;i<tabla.length;i++) {
@@ -137,7 +140,10 @@ function Hung(tabla) {
       return false;
    };
 
-   var tachar = function() {
+   /**
+     * Strikes all zeros using the minimun amount of lines
+    **/
+    var tachar = function() {
       ftach=[];
       ctach=[];
 
@@ -153,7 +159,11 @@ function Hung(tabla) {
       }
    };
 
-   var esSol = function() {
+   /**
+     * checks if the algorithm is done
+     * @return true if is done, false otherwise
+    **/
+    var esSol = function() {
       tachar();
       return (ftach.length+ctach.length>=tabla.length);
    };
@@ -173,7 +183,11 @@ function Hung(tabla) {
       return elem;
    };
 
-   var restarNoTachados = function(elem) {
+   /**
+     * Substract an element from each cell not striked, and adds it to each cell striked twice
+     * @param elem - The element which is going to be substracted and added
+    **/
+    var restarNoTachados = function(elem) {
       var ti=false;
       var tj=false;
       for (var i=0;i<tabla.length;i++) {
@@ -230,7 +244,7 @@ function resolver(tabla) {
 
    /**
      * finds a one-zero row
-     * @return object carrying the indexes of the one zero or -1 if not found 
+     * @return object carrying the indexes of the one zero or -1 if not found
     **/
    var ceroUnico = function() {
       var i0;
