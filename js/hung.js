@@ -178,7 +178,6 @@ function Hung(tabla) {
          }
       }
    };
-   console.log("Holaaaaa");
    costosReducidos();
    while (!esSol()) {
       iteracion = new Sol();

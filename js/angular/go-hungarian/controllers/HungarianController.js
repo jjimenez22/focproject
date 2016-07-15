@@ -84,10 +84,18 @@ function goHung($scope, $rootScope, $location, $anchorScroll) {
     $scope.formatSolution = function() {
       var sum = "";
       for (var i = 0; i < zFunction.length; i++) {
+        if (typeof zFunction[i].i === "undefined" || typeof zFunction[i].j === "undefined")
+          continue;
         sum += $rootScope.rows[zFunction[i].i][zFunction[i].j];
         sum += i == zFunction.length - 1 ? "" : " + ";
       }
-      sum += " = " + z;
+      var acum = 0;
+      for (var i = 0; i < zFunction.length; i++) {
+        if (typeof zFunction[i].i === "undefined" || typeof zFunction[i].j === "undefined")
+          continue;
+        acum += $rootScope.rows[zFunction[i].i][zFunction[i].j];
+      }
+      sum += " = " + acum;
       console.log(sum);
       return sum;
     }
