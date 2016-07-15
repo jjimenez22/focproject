@@ -46,7 +46,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         };
 
         $scope.closeDialog = function() {
-          console.log($scope.newValues);
           $mdDialog.hide();
         };
 
@@ -89,7 +88,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             updateTable(newDimension);
             $mdDialog.hide();
           }
-          console.log("new dimension: " + $rootScope.dimension);
         };
 
         $scope.closeDialog = function() {
@@ -97,7 +95,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
         };
 
         $scope.missingField = function(newDimension) {
-          console.log(newDimension);
           return ((typeof newDimension === "undefined") || newDimension < 2);
         };
 
@@ -141,12 +138,10 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
           .cancel('Cancel');
     $mdDialog.show(confirm).then(function() {
         // Delete selected row(s)
-        console.log("Rows length before removal: " + $rootScope.rows.length);
         for (var i = 0; i < $scope.selected.length; i++) {
           $rootScope.rows.splice($rootScope.rows.indexOf($scope.selected[i]), 1);
         }
         $scope.selected = [];
-        console.log("Rows length after removal: " + $rootScope.rows.length);
       $mdDialog.hide();
     }, function() {
       $mdDialog.hide();
@@ -207,7 +202,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
               dimension = dimension * 10 + parseInt(data[index], 10);
               index++;
             }
-            console.log("Dimension is: " + dimension);
             // iterate and do the same for every other number
             for (var i = index; i <= data.length; i++) {
               var number = parseInt(data[i], 10);
@@ -241,7 +235,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
             for (var j = 0; j < $rootScope.dimension; j++) {
               row.push(data[i * $rootScope.dimension + j]);
             }
-            console.log("Row: " + row);
             // update table with new row
             $rootScope.rows.push(row);
           }
@@ -266,6 +259,10 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
 
   /**
   * Uses a custom - small dialog to take new value from user input
+  * @param event - used to propragate the dialog event
+  * @param data - data to be modified.
+  * @param rowIndex - row index of the data to be modified.
+  * @param cellIndex - column index of the data to be modified.
   */
   $scope.editCell = function(event, data, rowIndex, cellIndex) {
   $mdEditDialog.small({
@@ -273,9 +270,6 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
     placeholder: 'Add new value',
     save: function (input) {
       data = parseInt(input.$modelValue);
-      console.log("new value:" +input.$modelValue);
-      console.log("row index: " +rowIndex);
-      console.log("cell index: " +cellIndex);
       if (!isNaN(data) && data >= 1) {
         // Input should be a number and grater than zero
         var copy = $rootScope.rows.slice();
@@ -290,12 +284,18 @@ function home($scope, $rootScope, $mdDialog, $http, $mdEditDialog) {
   /**
   * Helper function that updates table header and resets content
   * based on new dimension
+  * @param dimension - new table dimension.
   */
   function updateTable(dimension) {
     $scope.newValues = new Array(dimension);
     $rootScope.rows = [];
   }
 
+  /**
+  * Helper function that take user to mailto window
+  * @param email - email direction of receiver.
+  * @param subject - mail subject.
+  */
   $scope.sendEmail = function(email, subject) {
       var link = "mailto:"+ email
                  + "&subject=" + escape(subject);
