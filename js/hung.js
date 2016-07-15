@@ -1,3 +1,8 @@
+/**
+  * Goes through all iterations until it reaches a table with a solution
+  * @param tabla - The initial table with data
+  * @return An array in which each cell is an iteration represented with an object carrying the information
+ **/
 function Hung(tabla) {
 
    var Sol = function() {
@@ -38,6 +43,11 @@ function Hung(tabla) {
 
    var ftach=[];
    var ctach=[];
+   /**
+     * Function to see if a row or column is striked
+     * @param tabla - The initial table with data
+     * @return An array in which each cell is an iteration represented with an object carrying the information
+    **/
    var estaTachado = function(tachados, pos) {
       var fnd=false;
       for (var i=0;i<tachados.length && !fnd;i++)
@@ -218,6 +228,10 @@ function resolver(tabla) {
       return fnd;
    };
 
+   /**
+     * finds a one-zero row
+     * @return object carrying the indexes of the one zero or -1 if not found 
+    **/
    var ceroUnico = function() {
       var i0;
       var j0;
