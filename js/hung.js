@@ -197,6 +197,7 @@ function Hung(tabla) {
  */
 function resolver(tabla) {
    var sol=[];
+   var alt=[];
 
    var returnType = function(indexi, indexj) {
          this.i=indexi;
@@ -219,21 +220,45 @@ function resolver(tabla) {
       return fnd;
    };
 
+   var buscarYcambiar = function(i, j) {
+      for (var k=0;k<sol.length;k++) {
+         if (sol[k].i===i) {
+            var res=sol[k].j;
+            sol[k].j=j;
+            return res;
+         }
+      }
+   }
+
+   var intercambiar = function(j) {
+      for (var i=0;i<alt.length;i++) {
+         if(tabla[alt[i]][j]===0) {
+            var k = buscarYcambiar(alt[i], j);
+            // alt.splice(i, 1);
+            return k;
+         }
+      }
+   }
+
    var ceroUnico = function() {
       var i0;
       var j0;
       var minj0;
       var counter;
       var mincont=2000000;
+      var jaux;
 
       for (var i=0;i<tabla.length;i++) {
          if (estai(i))
             continue;
          counter=0;
          for (var j=0;j<tabla.length;j++) {
-            if (tabla[i][j]===0 && !estaj(j)) {
-               counter++;
-               j0=j;
+            if (!estaj(j)) {
+               jaux=j;
+               if (tabla[i][j]===0) {
+                  counter++;
+                  j0=j;
+               }
             }
          }
          if (counter<mincont) {
@@ -241,6 +266,12 @@ function resolver(tabla) {
             minj0=j0;
             mincont=counter;
          }
+      }
+
+      if (mincont === 0) {
+         minj0=intercambiar(jaux);
+      } else if (mincont>1) {
+         alt.push(i0);
       }
       return new returnType(i0, minj0);
    };
